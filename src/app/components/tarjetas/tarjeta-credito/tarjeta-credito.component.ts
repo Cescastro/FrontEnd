@@ -37,6 +37,7 @@ export class TarjetaCreditoComponent implements OnInit {
     this.tarjetaService.guardarTarjeta(tarjeta).subscribe(data =>{
       
       this.toastr.success('Registro Guardado', 'La tarjeta fue creada')
+      this.tarjetaService.obtenerTarjetas();
 
       this.form.reset();
     });

@@ -1,5 +1,13 @@
 <table class="table table-sm">
-    <tr>
-        <td></td>
+    <tr *ngFor="let tarjeta of tarjetaService.list">
+        <td>{{ tarjeta.titular }}</td>
+        <td>{{ tarjeta.numeroTarjeta }}</td>
+        <td>{{ tarjeta.fechaExpiracion }}</td>
+        <td>
+            <i class="far fa-edit fa-lg text-info" style="cursor: pointer;"></i>
+        </td>
+        <td>
+            <i class="far fa-trash-alt fa-lg text-danger" style="cursor: pointer;"></i>
+        </td>
     </tr>
 </table>

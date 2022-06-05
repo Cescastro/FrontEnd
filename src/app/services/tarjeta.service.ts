@@ -21,6 +21,6 @@ export class TarjetaService {
     this.http.get(this.myAppUrl + this.myApiUrl).toPromise()
                   .then(data =>{
                     this.list = data as TarjetaCredito[];
-                  })
+                  });
   }
 }
