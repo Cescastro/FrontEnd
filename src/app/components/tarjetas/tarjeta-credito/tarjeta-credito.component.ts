@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { TarjetaCredito } from 'src/app/models/tarjetaCredito';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
@@ -11,7 +12,9 @@ import { TarjetaService } from 'src/app/services/tarjeta.service';
 export class TarjetaCreditoComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private tarjetaService: TarjetaService) {
+  constructor(private formBuilder: FormBuilder, 
+              private tarjetaService: TarjetaService,
+              private toastr: ToastrService) {
     this.form = this.formBuilder.group({
       id: 0,
       titular: ['',[Validators.required]],
@@ -32,7 +35,9 @@ export class TarjetaCreditoComponent implements OnInit {
       cvv: this.form.get('cvv').value,
     }
     this.tarjetaService.guardarTarjeta(tarjeta).subscribe(data =>{
-      console.log("guardado exitosamente");
+      
+      this.toastr.success('Registro Guardado', 'La tarjeta fue creada')
+
       this.form.reset();
     });
   }
