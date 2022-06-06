@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TarjetaCredito } from '../models/tarjetaCredito';
 
 @Injectable({
@@ -10,11 +10,16 @@ export class TarjetaService {
   myAppUrl = 'https://localhost:44342/';
   myApiUrl = 'api/TarjetaCredito/';
   list: TarjetaCredito[];
+  private actualizarFormulario = new BehaviorSubject<TarjetaCredito>({} as any);
 
   constructor(private http: HttpClient) { }
 
   guardarTarjeta(tarjeta: TarjetaCredito): Observable<TarjetaCredito>{
     return this.http.post<TarjetaCredito>(this.myAppUrl + this.myApiUrl,tarjeta);
+  }
+
+  eliminarTarjeta(id: number): Observable<TarjetaCredito> {
+    return this.http.delete<TarjetaCredito>(this.myAppUrl + this.myApiUrl + id);
   }
 
   obtenerTarjetas(){
@@ -23,4 +28,13 @@ export class TarjetaService {
                     this.list = data as TarjetaCredito[];
                   });
   }
+
+  actualizar(tarjeta){
+    this.actualizarFormulario.next(tarjeta);
+  }
+
+  obtenerTarjeta$(): Observable<TarjetaCredito>{
+    return this.actualizarFormulario.asObservable();
+  }
+
 }

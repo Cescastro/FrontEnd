@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
 @Component({
@@ -8,10 +9,27 @@ import { TarjetaService } from 'src/app/services/tarjeta.service';
 })
 export class ListTarjetaCreditoComponent implements OnInit {
 
-  constructor(public tarjetaService: TarjetaService) { }
+  constructor(public tarjetaService: TarjetaService,
+              public toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.tarjetaService.obtenerTarjetas();
+  }
+
+  eliminarTarjeta(id: number){
+
+    console.log('eliminar tarjeta');
+      
+    if (confirm('Esta seguro que desea eliminar el registro?')){
+        this.tarjetaService.eliminarTarjeta(id).subscribe(data => {
+        this.toastr.warning('Registro eliminado', 'La Tarjeta fue eliminada');
+        this.tarjetaService.obtenerTarjetas();
+      });
+    }
+  }
+
+  editar(tarjeta: any){
+    this.tarjetaService.actualizar(tarjeta);
   }
 
 }

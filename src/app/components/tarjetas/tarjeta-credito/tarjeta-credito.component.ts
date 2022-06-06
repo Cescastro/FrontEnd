@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { TarjetaCredito } from 'src/app/models/tarjetaCredito';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
@@ -9,8 +10,9 @@ import { TarjetaService } from 'src/app/services/tarjeta.service';
   templateUrl: './tarjeta-credito.component.html',
   styleUrls: ['./tarjeta-credito.component.css']
 })
-export class TarjetaCreditoComponent implements OnInit {
+export class TarjetaCreditoComponent implements OnInit, OnDestroy {
   form: FormGroup;
+  suscription: Subscription;
 
   constructor(private formBuilder: FormBuilder, 
               private tarjetaService: TarjetaService,
@@ -25,6 +27,13 @@ export class TarjetaCreditoComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.suscription = this.tarjetaService.obtenerTarjeta$().subscribe(data => {
+        console.log(data);
+      });
+  }
+
+  ngOnDestroy() {
+    this.suscription.unsubscribe();
   }
 
   guardarTarjeta(){
@@ -38,7 +47,6 @@ export class TarjetaCreditoComponent implements OnInit {
       
       this.toastr.success('Registro Guardado', 'La tarjeta fue creada')
       this.tarjetaService.obtenerTarjetas();
-
       this.form.reset();
     });
   }

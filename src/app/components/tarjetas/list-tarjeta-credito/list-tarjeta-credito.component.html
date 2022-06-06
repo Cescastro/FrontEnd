@@ -4,10 +4,10 @@
         <td>{{ tarjeta.numeroTarjeta }}</td>
         <td>{{ tarjeta.fechaExpiracion }}</td>
         <td>
-            <i class="far fa-edit fa-lg text-info" style="cursor: pointer;"></i>
+            <i class="far fa-edit fa-lg text-info" (click)="editar(tarjeta)" style="cursor: pointer;"></i>
         </td>
         <td>
-            <i class="far fa-trash-alt fa-lg text-danger" style="cursor: pointer;"></i>
+            <i class="far fa-trash-alt fa-lg text-danger" (click)="eliminarTarjeta(tarjeta.id)" style="cursor: pointer;"></i>
         </td>
     </tr>
 </table>
