@@ -7,7 +7,7 @@ import { TarjetaCredito } from '../models/tarjetaCredito';
   providedIn: 'root'
 })
 export class TarjetaService {
-  myAppUrl = 'https://localhost:44342/';
+  myAppUrl = 'http://backendtc.azurewebsites.net/';
   myApiUrl = 'api/TarjetaCredito/';
   list: TarjetaCredito[];
   private actualizarFormulario = new BehaviorSubject<TarjetaCredito>({} as any);
@@ -27,6 +27,10 @@ export class TarjetaService {
                   .then(data =>{
                     this.list = data as TarjetaCredito[];
                   });
+  }
+
+  actualizarTarjeta(id: number, tarjeta: TarjetaCredito): Observable<TarjetaCredito>{
+    return this.http.put<TarjetaCredito>(this.myAppUrl + this.myApiUrl+ id,tarjeta);
   }
 
   actualizar(tarjeta){
